@@ -1,28 +1,26 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Subarray {
-    private ArrayList<Integer> prices = new ArrayList<>();
+    private List<Integer> prices = new ArrayList<>();
 
-    public Subarray (ArrayList<Integer> prices){
+    public Subarray (List<Integer> prices){
         if (prices.size() < 2){
             throw new IllegalArgumentException();
         }
         this.prices = prices;
     }
 
-    public ArrayList<Integer> getPrices(){
+    public List<Integer> getPrices(){
         return prices;
     }
 
     public int findBestDeal (){
-        Integer max = prices.get(1);
-        Integer min = prices.get(0);
-        Integer bestDeal = prices.get(1) - prices.get(0);
-        for (int i = 1; i < prices.size() - 1; i++) {
-            if (prices.get(i) < min) {
-                if (bestDeal < (max - min)) {
-                    bestDeal = max - min;
-                }
+        int max = prices.get(1);
+        int min = prices.get(0);
+        int bestDeal = prices.get(1) - prices.get(0);
+        for (int i = 1; i < prices.size(); i++) {
+            if (prices.get(i) < min && i != prices.size() - 1) {
                 min = prices.get(i);
                 max = prices.get(i + 1);
             } else {
@@ -30,13 +28,9 @@ public class Subarray {
                     max = prices.get(i);
                 }
             }
-
-        }
-        if (prices.get(prices.size() - 1) > max){  //Проверка последнего элемента
-            max = prices.get(prices.size() - 1);
-        }
-        if (bestDeal < (max - min)){
-            bestDeal = max - min;
+            if (bestDeal < (max - min)) {
+                bestDeal = max - min;
+            }
         }
         return bestDeal;
     }
